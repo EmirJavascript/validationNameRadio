@@ -9,6 +9,8 @@ const athrCorrect = document.querySelector('.autorizatedCorrect')
 const button = document.querySelector('.in')
 
 
+let isSubmitClicked = false
+
 const validateName = () => {
   if (inputName.value.length < 5) {
     return 'Имя слишком короткое'
@@ -41,6 +43,7 @@ button.addEventListener('click', (e) => {
   e.preventDefault();
   const nameErrText = validateName()
   const radioErrText = atLeastOneRadio()
+
   if (!nameErrText && !radioErrText) {
     athrCorrect.textContent = 'Авторизация успешна!';
     nameError.textContent = ''
@@ -48,5 +51,19 @@ button.addEventListener('click', (e) => {
   } else {
     nameError.textContent = nameErrText
     radioError.textContent = radioErrText
+    isSubmitClicked = true    
   }
+})
+
+
+inputName.addEventListener('input', () => {
+  if (isSubmitClicked === true) {
+    nameError.textContent = ''
+    athrCorrect.textContent = '' 
+    return isSubmitClicked === false
+  }
+  if (isSubmitClicked === false) {
+    athrCorrect.textContent = ''
+  }
+  return ''
 })
